@@ -1,15 +1,11 @@
-package com.example.instagramclonecoding.user.service;
+package com.example.instagramclonecoding.domain.user.service;
 
-import com.example.instagramclonecoding.user.dto.SignupRequest;
-import com.example.instagramclonecoding.user.entity.User;
-import com.example.instagramclonecoding.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.instagramclonecoding.domain.user.dto.SignupRequest;
+import com.example.instagramclonecoding.domain.user.entity.User;
+import com.example.instagramclonecoding.domain.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
-import java.util.function.Function;
 
 @Service
 public class Signup {

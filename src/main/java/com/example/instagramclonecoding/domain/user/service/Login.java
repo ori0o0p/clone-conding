@@ -1,15 +1,13 @@
-package com.example.instagramclonecoding.user.service;
+package com.example.instagramclonecoding.domain.user.service;
 
-import com.example.instagramclonecoding.security.Tokenizer;
-import com.example.instagramclonecoding.user.dto.LoginRequest;
-import com.example.instagramclonecoding.user.dto.TokenResponse;
-import com.example.instagramclonecoding.user.entity.User;
-import com.example.instagramclonecoding.user.repository.UserRepository;
+import com.example.instagramclonecoding.domain.user.dto.LoginRequest;
+import com.example.instagramclonecoding.domain.user.dto.TokenResponse;
+import com.example.instagramclonecoding.domain.user.repository.UserRepository;
+import com.example.instagramclonecoding.global.security.jwt.Tokenizer;
+import com.example.instagramclonecoding.domain.user.entity.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
-import javax.security.auth.login.AccountNotFoundException;
 
 @Service
 public class Login {

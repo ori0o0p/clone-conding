@@ -1,6 +1,6 @@
-package com.example.instagramclonecoding.user.repository;
+package com.example.instagramclonecoding.domain.user.repository;
 
-import com.example.instagramclonecoding.user.entity.User;
+import com.example.instagramclonecoding.domain.user.entity.User;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 

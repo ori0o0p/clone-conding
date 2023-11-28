@@ -1,4 +1,4 @@
-package com.example.instagramclonecoding.user.entity;
+package com.example.instagramclonecoding.domain.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

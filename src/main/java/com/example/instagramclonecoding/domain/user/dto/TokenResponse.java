@@ -1,4 +1,4 @@
-package com.example.instagramclonecoding.user.dto;
+package com.example.instagramclonecoding.domain.user.dto;
 
 import lombok.Builder;
 

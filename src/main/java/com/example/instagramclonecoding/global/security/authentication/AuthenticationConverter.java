@@ -1,5 +1,6 @@
-package com.example.instagramclonecoding.security;
+package com.example.instagramclonecoding.global.security.authentication;
 
+import com.example.instagramclonecoding.global.security.jwt.Tokenizer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;
