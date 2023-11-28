@@ -1,7 +1,7 @@
 package com.example.instagramclonecoding.domain.auth.service;
 
-import com.example.instagramclonecoding.domain.auth.dto.LoginRequest;
-import com.example.instagramclonecoding.domain.auth.dto.TokenResponse;
+import com.example.instagramclonecoding.domain.auth.dto.request.LoginRequest;
+import com.example.instagramclonecoding.domain.auth.dto.response.TokenResponse;
 import com.example.instagramclonecoding.domain.user.repository.UserRepository;
 import com.example.instagramclonecoding.global.security.jwt.Tokenizer;
 import com.example.instagramclonecoding.domain.user.entity.User;
