@@ -24,6 +24,7 @@ public class Login {
     public Mono<TokenResponse> execute(LoginRequest request) {
         return userRepository.findByEmail(request.email())
                 .filter(user -> passwordEncoder.matches(request.password(), user.getPassword()))
+                .switchIfEmpty(Mono.error(new RuntimeException("비밀번호가 일치하지 않음")))
                 .map(User::getEmail)
                 .map(userId -> {
                     final String accessToken = tokenizer.createAccessToken(userId);
