@@ -22,15 +22,24 @@ public class CreateArticle {
     }
 
     public Mono<Void> execute(ArticleRequest request, MultipartFile image) {
-        return Mono.defer(() -> {
-            User user = userFacade.getUser();
-            Article article = Article.builder()
-                    .writer(user)
-                    .imageURL("") // image
-                    .content(request.content())
-                    .build();
-            return articleRepository.save(article);
-        }).then();
+        User user = userFacade.getUser();
+
+        return Mono.just(
+                Article.builder()
+                        .writer(user)
+                        .imageURL("") // image
+                        .content(request.content())
+                        .build())
+                .flatMap(articleRepository::save).then();
+//        return Mono.defer(() -> {
+//            User user = userFacade.getUser();
+//            Article article = Article.builder()
+//                    .writer(user)
+//                    .imageURL("") // image
+//                    .content(request.content())
+//                    .build();
+//            return articleRepository.save(article);
+//        }).then();
     }
 
 }
