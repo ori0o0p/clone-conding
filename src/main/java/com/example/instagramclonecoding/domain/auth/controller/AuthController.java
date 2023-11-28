@@ -1,10 +1,10 @@
-package com.example.instagramclonecoding.domain.user.controller;
+package com.example.instagramclonecoding.domain.auth.controller;
 
-import com.example.instagramclonecoding.domain.user.dto.LoginRequest;
-import com.example.instagramclonecoding.domain.user.dto.TokenResponse;
-import com.example.instagramclonecoding.domain.user.service.Login;
-import com.example.instagramclonecoding.domain.user.dto.SignupRequest;
-import com.example.instagramclonecoding.domain.user.service.Signup;
+import com.example.instagramclonecoding.domain.auth.dto.LoginRequest;
+import com.example.instagramclonecoding.domain.auth.dto.TokenResponse;
+import com.example.instagramclonecoding.domain.auth.service.Login;
+import com.example.instagramclonecoding.domain.auth.dto.SignupRequest;
+import com.example.instagramclonecoding.domain.auth.service.Signup;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

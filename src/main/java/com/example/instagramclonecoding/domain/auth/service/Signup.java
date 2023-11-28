@@ -1,6 +1,6 @@
-package com.example.instagramclonecoding.domain.user.service;
+package com.example.instagramclonecoding.domain.auth.service;
 
-import com.example.instagramclonecoding.domain.user.dto.SignupRequest;
+import com.example.instagramclonecoding.domain.auth.dto.SignupRequest;
 import com.example.instagramclonecoding.domain.user.entity.User;
 import com.example.instagramclonecoding.domain.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
