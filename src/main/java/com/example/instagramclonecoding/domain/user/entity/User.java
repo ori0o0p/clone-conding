@@ -1,6 +1,7 @@
 package com.example.instagramclonecoding.domain.user.entity;
 
 import com.example.instagramclonecoding.domain.article.entity.Article;
+import com.example.instagramclonecoding.domain.follow.entity.Follow;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.eclipse.collections.api.factory.Lists;
@@ -30,9 +31,8 @@ public class User {
 
     private String profileURL;
 
-    private List<User> followerList = Lists.fixedSize.of(); // 팔로워 목록
-
-    private List<User> followList = Lists.fixedSize.of(); // 팔로잉 목록
+    @DBRef
+    private Follow followInfo;
 
     @DBRef(lazy = true)
     private List<Article> articleList = Lists.fixedSize.of(); // 게시물 목록
