@@ -1,6 +1,7 @@
 package com.example.instagramclonecoding.domain.article.entity;
 
 import com.example.instagramclonecoding.domain.comment.entity.Comment;
+import com.example.instagramclonecoding.domain.like.entity.Like;
 import com.example.instagramclonecoding.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,10 +37,8 @@ public class Article {
     private Date createdAt; // 게시물 작성일
 
     // 좋아요 수 | 좋아요 누른 사람
-    @Builder.Default
-    private Integer likeCNT = 0;
-
-    private List<User> likeUsers = Lists.fixedSize.of();
+    @DBRef(lazy = true)
+    private List<Like> likeList = Lists.fixedSize.of();
 
     // 댓글
     @DBRef(lazy = true)
