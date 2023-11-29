@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
+
 
 @Service
 public class CreateArticle {
@@ -26,9 +28,10 @@ public class CreateArticle {
 
         return Mono.just(
                 Article.builder()
-                        .writer(user)
                         .imageURL("") // image
                         .content(request.content())
+                        .writer(user)
+                        .createdAt(new Date())
                         .build())
                 .flatMap(articleRepository::save).then();
 //        return Mono.defer(() -> {

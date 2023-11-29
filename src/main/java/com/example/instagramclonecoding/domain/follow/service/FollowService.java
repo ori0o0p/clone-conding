@@ -1,15 +1,10 @@
 package com.example.instagramclonecoding.domain.follow.service;
 
-import com.example.instagramclonecoding.domain.follow.repository.FollowRepository;
 import com.example.instagramclonecoding.domain.user.entity.User;
 import com.example.instagramclonecoding.domain.user.repository.UserRepository;
 import com.example.instagramclonecoding.domain.user.service.facade.UserFacade;
-import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-import java.util.Objects;
 
 @Service
 public class FollowService {

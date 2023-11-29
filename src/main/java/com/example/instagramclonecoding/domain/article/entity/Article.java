@@ -1,5 +1,6 @@
 package com.example.instagramclonecoding.domain.article.entity;
 
+import com.example.instagramclonecoding.domain.comment.entity.Comment;
 import com.example.instagramclonecoding.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,12 +41,17 @@ public class Article {
 
     private List<User> likeUsers = Lists.fixedSize.of();
 
+    // 댓글
+    @DBRef(lazy = true)
+    private List<Comment> commentList = Lists.fixedSize.of();
+
     // 좋아요 가리기, 댓글 기능 헤제
     @Builder
-    public Article(String imageURL, String content, User writer) {
+    public Article(String imageURL, String content, User writer, Date createdAt) {
         this.imageURL = imageURL;
         this.content = content;
         this.writer = writer;
+        this.createdAt = createdAt;
     }
 
     // 게시물 수정은 내용 수정만
