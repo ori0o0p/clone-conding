@@ -1,8 +1,7 @@
 package com.example.instagramclonecoding.domain.article.dto;
 
-import com.example.instagramclonecoding.domain.comment.entity.Comment;
+import com.example.instagramclonecoding.domain.comment.dto.CommentResponse;
 import com.example.instagramclonecoding.domain.like.dto.LikeResponse;
-import com.example.instagramclonecoding.domain.like.entity.Like;
 import lombok.Builder;
 
 import java.util.Date;
@@ -15,7 +14,7 @@ public record MyArticleResponse(
         String content,
         Date createdAt,
         List<LikeResponse> likeList,
-        List<Comment> commentList
+        List<CommentResponse> commentList
 
 ) {
 
