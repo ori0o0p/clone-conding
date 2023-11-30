@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-public class FollowService {
+public class FollowToggleService {
     private final UserFacade userFacade;
     private final UserRepository userRepository;
 
-    public FollowService(UserFacade userFacade, UserRepository userRepository) {
+    public FollowToggleService(UserFacade userFacade, UserRepository userRepository) {
         this.userFacade = userFacade;
         this.userRepository = userRepository;
     }
