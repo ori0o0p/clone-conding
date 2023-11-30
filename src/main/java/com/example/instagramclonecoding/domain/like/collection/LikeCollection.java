@@ -2,7 +2,6 @@ package com.example.instagramclonecoding.domain.like.collection;
 
 import com.example.instagramclonecoding.domain.like.dto.LikeResponse;
 import com.example.instagramclonecoding.domain.like.entity.Like;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 
