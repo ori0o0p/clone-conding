@@ -30,8 +30,10 @@ public class User {
 
     private String profileURL;
 
+    @DBRef
     private List<User> followerList = Lists.fixedSize.of(); // 나의 팔로워
 
+    @DBRef
     private List<User> followList = Lists.fixedSize.of(); // 내가 팔로우
 
     @DBRef(lazy = true)
