@@ -3,13 +3,13 @@ package com.example.instagramclonecoding.domain.user.service;
 import com.example.instagramclonecoding.domain.article.dto.MyArticleResponse;
 import com.example.instagramclonecoding.domain.article.entity.Article;
 import com.example.instagramclonecoding.domain.article.repository.ArticleRepository;
+import com.example.instagramclonecoding.domain.comment.collection.CommentCollection;
 import com.example.instagramclonecoding.domain.like.collection.LikeCollection;
 import com.example.instagramclonecoding.domain.user.entity.User;
 import com.example.instagramclonecoding.domain.user.service.facade.UserFacade;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 @Service
@@ -34,6 +34,7 @@ public class FindMyArticles {
 
     private Mono<MyArticleResponse> rapping(Article article) {
         LikeCollection likeCollection = new LikeCollection(article.getLikeList());
+        CommentCollection commentCollection = new CommentCollection(article.getCommentList());
 
         return Mono.just(MyArticleResponse.builder()
                         .id(article.getId())
@@ -41,11 +42,8 @@ public class FindMyArticles {
                         .content(article.getContent())
                         .createdAt(article.getCreatedAt())
                         .likeList(likeCollection.toLikeResponse())
-                        .commentList()
+                        .commentList(commentCollection.toCommentResponse())
                 .build());
     }
-
-
-
 
 }
