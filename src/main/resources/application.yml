@@ -8,3 +8,8 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: insta
+
+
+default:
+  url: http://*^^*/
+
