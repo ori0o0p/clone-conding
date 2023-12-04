@@ -35,9 +35,10 @@ public class Comment {
     private Date createdAt;
 
     @Builder
-    public Comment(String content, Date createdAt) {
+    public Comment(String content, Date createdAt, Article article) {
         this.content = content;
         this.createdAt = createdAt;
+        this.article = article;
     }
 
 }
