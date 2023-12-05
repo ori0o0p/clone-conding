@@ -34,15 +34,6 @@ public class CreateArticle {
                         .createdAt(new Date())
                         .build())
                 .flatMap(articleRepository::save).then();
-//        return Mono.defer(() -> {
-//            User user = userFacade.getUser();
-//            Article article = Article.builder()
-//                    .writer(user)
-//                    .imageURL("") // image
-//                    .content(request.content())
-//                    .build();
-//            return articleRepository.save(article);
-//        }).then();
     }
 
 }
