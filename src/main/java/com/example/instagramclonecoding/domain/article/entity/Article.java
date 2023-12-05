@@ -1,6 +1,7 @@
 package com.example.instagramclonecoding.domain.article.entity;
 
 import com.example.instagramclonecoding.domain.comment.entity.Comment;
+import com.example.instagramclonecoding.domain.hashTag.entity.HashTag;
 import com.example.instagramclonecoding.domain.like.entity.Like;
 import com.example.instagramclonecoding.domain.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,10 @@ public class Article {
     @DBRef(lazy = true)
     private List<Comment> commentList = Lists.fixedSize.of();
 
+    //해쉬태그 0 ~ n개
+    @DBRef(lazy = true)
+    private List<HashTag> hashTags = Lists.fixedSize.of();
+
     // 좋아요 가리기, 댓글 기능 헤제
     @Builder
     public Article(String imageURL, String content, User writer, Date createdAt) {
@@ -56,6 +61,10 @@ public class Article {
     // 게시물 수정은 내용 수정만
     public void editContent(String newContent) {
         this.content = newContent;
+    }
+
+    public void addComment(Comment comment) {
+        this.commentList.add(comment);
     }
 
 }

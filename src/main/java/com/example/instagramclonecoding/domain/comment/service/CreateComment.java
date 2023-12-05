@@ -37,7 +37,7 @@ public class CreateComment {
                             .article(article)
                             .build();
                     // 댓글 추가 article save, comment save
-                    article.getCommentList().add(comment);
+                    article.addComment(comment);
                     return Mono.zip(commentRepository.save(comment),
                             articleRepository.save(article));
                 })/*.onErrorResume(Mono::error)*/.then();
