@@ -19,7 +19,7 @@ public class CreateHashTag {
 
     public Mono<Void> execute(String tag) {
         return hashTagRepository.findById(tag)
-                .flatMap(hashTag -> Mono.error(new RuntimeException("이미 사용할 수 있는 태그입니다."))) // 태그를 만들 수 없음
+                .flatMap(hashTag -> Mono.error(new RuntimeException("이미 사용할 수 있는 태그입니다.")))
                 .switchIfEmpty(Mono.defer(() ->{ // 태그를 만들 수 있음
                     HashTag hashTag = HashTag.builder()
                             .tag(tag)

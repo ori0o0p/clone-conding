@@ -1,7 +1,6 @@
 package com.example.instagramclonecoding.domain.article.service;
 
 import com.example.instagramclonecoding.domain.article.dto.SearchArticleResponse;
-import com.example.instagramclonecoding.domain.article.entity.Article;
 import com.example.instagramclonecoding.domain.hashTag.entity.HashTag;
 import com.example.instagramclonecoding.domain.hashTag.repository.HashTagRepository;
 import org.springframework.stereotype.Service;
