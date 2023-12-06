@@ -12,20 +12,23 @@ import java.awt.image.BufferedImage;
 @Service
 public class QrGenerateService {
 
-    public BufferedImage execute(String url) throws WriterException {
+    public BufferedImage execute(String url)  {
 
         if (url.isBlank()) {
             throw new RuntimeException("url이 비어있어요");
         }
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
-        BitMatrix bitMatrix = qrCodeWriter.encode(
-                url,
-                BarcodeFormat.QR_CODE,
-                200, 200
-        );
-
-        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+            BitMatrix bitMatrix = qrCodeWriter.encode(
+                    url,
+                    BarcodeFormat.QR_CODE,
+                    200, 200
+            );
+            return MatrixToImageWriter.toBufferedImage(bitMatrix);
+        } catch (WriterException e) {
+            throw new RuntimeException("qr 생성 실패");
+        }
     }
 
 }
