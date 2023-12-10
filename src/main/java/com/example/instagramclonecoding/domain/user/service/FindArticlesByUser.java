@@ -5,7 +5,7 @@ import com.example.instagramclonecoding.domain.article.entity.Article;
 import com.example.instagramclonecoding.domain.article.repository.ArticleRepository;
 import com.example.instagramclonecoding.domain.comment.collection.CommentCollection;
 import com.example.instagramclonecoding.domain.like.collection.LikeCollection;
-import com.example.instagramclonecoding.domain.user.service.facade.UserFacade;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,17 +14,16 @@ import reactor.core.scheduler.Schedulers;
 @Service
 public class FindArticlesByUser {
     private final ArticleRepository articleRepository;
-    private final UserFacade userFacade;
 
-    public FindArticlesByUser(ArticleRepository articleRepository, UserFacade userFacade) {
+    public FindArticlesByUser(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
-        this.userFacade = userFacade;
     }
 
-    public Flux<ArticleResponse> execute(String userId) {
-        //User user = userFacade.getUser();
-
+    public Flux<ArticleResponse> execute(String userId, String lastArticleId, int size) {
         Flux<ArticleResponse> list = articleRepository.findByUserId(userId)
+                .filter(article -> lastArticleId == null ||
+                        new ObjectId(article.getId()).getTimestamp() > new ObjectId(lastArticleId).getTimestamp())
+                .take(size)
                 .flatMap(this::rapping)
                 .subscribeOn(Schedulers.boundedElastic());
 

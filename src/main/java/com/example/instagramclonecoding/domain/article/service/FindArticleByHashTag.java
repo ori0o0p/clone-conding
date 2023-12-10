@@ -3,6 +3,7 @@ package com.example.instagramclonecoding.domain.article.service;
 import com.example.instagramclonecoding.domain.article.dto.SearchArticleResponse;
 import com.example.instagramclonecoding.domain.hashTag.entity.HashTag;
 import com.example.instagramclonecoding.domain.hashTag.repository.HashTagRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
@@ -15,10 +16,13 @@ public class FindArticleByHashTag {
         this.hashTagRepository = hashTagRepository;
     }
 
-    public Flux<SearchArticleResponse> execute(String hashTag) {
+    public Flux<SearchArticleResponse> execute(String hashTag, String lastArticleId, int size) {
         Flux<SearchArticleResponse> list = hashTagRepository.findById(hashTag)
                 .map(HashTag::getArticleList)
                 .flatMap(articles -> Flux.fromIterable(articles)
+                        .filter(article -> lastArticleId == null ||
+                                new ObjectId(article.getId()).getTimestamp() > new ObjectId(lastArticleId).getTimestamp())
+                        .take(size)
                         .map(SearchArticleResponse::new)
                         .collectList())
                 .flatMapMany(Flux::fromIterable)
