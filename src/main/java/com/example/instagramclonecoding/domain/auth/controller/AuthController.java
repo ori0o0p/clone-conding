@@ -5,10 +5,8 @@ import com.example.instagramclonecoding.domain.auth.dto.response.TokenResponse;
 import com.example.instagramclonecoding.domain.auth.service.Login;
 import com.example.instagramclonecoding.domain.auth.dto.request.SignupRequest;
 import com.example.instagramclonecoding.domain.auth.service.Signup;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RequestMapping("/api/auth")
@@ -28,6 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<Void> setSignup(@RequestBody SignupRequest request) {
         return signup.execute(request);
     }
