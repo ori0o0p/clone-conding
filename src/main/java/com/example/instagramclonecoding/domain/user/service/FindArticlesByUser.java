@@ -40,8 +40,10 @@ public class FindArticlesByUser {
                         .imageURL(article.getImageURL())
                         .content(article.getContent())
                         .createdAt(article.getCreatedAt())
-                        .likeList(likeCollection.toLikeResponse())
-                        .commentList(commentCollection.toCommentResponse())
+                        .likeList(likeCollection.toLikeResponse()
+                                .collectList().block())
+                        .commentList(commentCollection.toCommentResponse()
+                                .collectList().block())
                 .build());
     }
 

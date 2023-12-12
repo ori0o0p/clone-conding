@@ -2,6 +2,7 @@ package com.example.instagramclonecoding.domain.comment.collection;
 
 import com.example.instagramclonecoding.domain.comment.dto.CommentResponse;
 import com.example.instagramclonecoding.domain.comment.entity.Comment;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,11 +14,10 @@ public class CommentCollection {
         this.commentList = commentList;
     }
 
-    public List<CommentResponse> toCommentResponse() {
-        return commentList.stream()
+    public Flux<CommentResponse> toCommentResponse() {
+        return Flux.fromIterable(commentList)
                 .filter(Objects::nonNull)
-                .map(CommentResponse::new)
-                .toList();
+                .map(CommentResponse::new);
     }
 
 }
