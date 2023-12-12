@@ -20,14 +20,12 @@ public class FindArticlesByUser {
     }
 
     public Flux<ArticleResponse> execute(String userId, String lastArticleId, int size) {
-        Flux<ArticleResponse> list = articleRepository.findByUserId(userId)
+        return articleRepository.findByUserId(userId)
                 .filter(article -> lastArticleId == null ||
                         new ObjectId(article.getId()).getTimestamp() > new ObjectId(lastArticleId).getTimestamp())
                 .take(size)
                 .flatMap(this::rapping)
                 .subscribeOn(Schedulers.boundedElastic());
-
-        return Flux.from(list);
     }
 
     private Mono<ArticleResponse> rapping(Article article) {

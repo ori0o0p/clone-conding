@@ -17,7 +17,7 @@ public class FindArticleByHashTag {
     }
 
     public Flux<SearchArticleResponse> execute(String hashTag, String lastArticleId, int size) {
-        Flux<SearchArticleResponse> list = hashTagRepository.findById(hashTag)
+        return hashTagRepository.findById(hashTag)
                 .map(HashTag::getArticleList)
                 .flatMap(articles -> Flux.fromIterable(articles)
                         .filter(article -> lastArticleId == null ||
@@ -27,8 +27,6 @@ public class FindArticleByHashTag {
                         .collectList())
                 .flatMapMany(Flux::fromIterable)
                 .subscribeOn(Schedulers.boundedElastic());
-
-        return Flux.from(list);
     }
 
 }
