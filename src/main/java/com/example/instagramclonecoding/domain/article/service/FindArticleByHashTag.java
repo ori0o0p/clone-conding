@@ -19,7 +19,8 @@ public class FindArticleByHashTag {
     public Flux<SearchArticleResponse> execute(String hashTag, String lastArticleId, int size) {
         return hashTagRepository.findById(hashTag)
                 .map(HashTag::getArticleList)
-                .flatMap(articles -> Flux.fromIterable(articles)
+                //.map(articles -> Flux.fromIterable(articles)) // Mono<Flux<Article>>
+                .flatMap(articles -> Flux.fromIterable(articles) // Flux<Article>
                         .filter(article -> lastArticleId == null ||
                                 new ObjectId(article.getId()).getTimestamp() > new ObjectId(lastArticleId).getTimestamp())
                         .take(size)
