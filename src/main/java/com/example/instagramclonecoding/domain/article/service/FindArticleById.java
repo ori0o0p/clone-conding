@@ -3,6 +3,7 @@ package com.example.instagramclonecoding.domain.article.service;
 import com.example.instagramclonecoding.domain.article.dto.ArticleResponse;
 import com.example.instagramclonecoding.domain.article.entity.Article;
 import com.example.instagramclonecoding.domain.article.repository.ArticleRepository;
+import com.example.instagramclonecoding.domain.article.service.facade.ArticleFacade;
 import com.example.instagramclonecoding.domain.comment.collection.CommentCollection;
 import com.example.instagramclonecoding.domain.like.collection.LikeCollection;
 import org.springframework.stereotype.Service;
@@ -12,15 +13,16 @@ import reactor.core.publisher.Mono;
 @Service
 public class FindArticleById {
     private final ArticleRepository articleRepository;
+    private final ArticleFacade articleFacade;
 
-    public FindArticleById(ArticleRepository articleRepository) {
+    public FindArticleById(ArticleRepository articleRepository, ArticleFacade articleFacade) {
         this.articleRepository = articleRepository;
+        this.articleFacade = articleFacade;
     }
 
     // req : article ID
     public Mono<ArticleResponse> execute(String articleId) {
-        return articleRepository.findById(articleId)
-                .switchIfEmpty(Mono.error(() -> new RuntimeException("게시물을 찾지 못함")))
+        return articleFacade.getArticle(articleId)
                 .map(this::rapping);
     }
 
