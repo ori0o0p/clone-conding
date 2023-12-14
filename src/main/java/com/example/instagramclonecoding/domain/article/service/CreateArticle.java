@@ -23,14 +23,16 @@ public class CreateArticle {
         this.userFacade = userFacade;
     }
 
-    public Mono<Void> execute(ArticleRequest request, MultipartFile image) {
-        User user = userFacade.getUser();
+    // 해시 태그 추가 #
+    // 위치 ?
 
+    public Mono<Void> execute(ArticleRequest request, MultipartFile image) {
         return Mono.just(
                 Article.builder()
                         .imageURL("") // image
                         .content(request.content())
-                        .writer(user)
+                        .writer(userFacade.getUser()
+                                .block())
                         .createdAt(new Date())
                         .build())
                 .flatMap(articleRepository::save).then();

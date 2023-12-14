@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping("/articles/me")
     public Flux<ArticleResponse> getMyArticles(@RequestBody LastArticleIdRequest request) {
-        User user = userFacade.getUser();
+        User user = userFacade.getUser().block();
         return findArticlesByUser.execute(user.getId(), request.lastArticleId(), 18);
     }
 

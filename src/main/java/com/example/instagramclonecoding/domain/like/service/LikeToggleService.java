@@ -24,7 +24,7 @@ public class LikeToggleService {
 
     // request: 게시물 id
     public Mono<Void> execute(String articleId) {
-        User user = userFacade.getUser();
+        User user = userFacade.getUser().block();
         return articleRepository.findById(articleId)
                 .switchIfEmpty(Mono.error(new RuntimeException("게시물을 찾지 못함")))
                 .flatMap(article -> {

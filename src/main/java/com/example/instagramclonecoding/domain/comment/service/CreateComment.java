@@ -26,7 +26,7 @@ public class CreateComment {
     // req : 게시물 ID, 댓글 내용(content)
     public Mono<Void> execute(CommentRequest request) {
         // 유저 정보 가져오기
-        User user = userFacade.getUser();
+        User user = userFacade.getUser().block();
         // 게시물 검증
         return articleRepository.findById(request.articleId())
                 .switchIfEmpty(Mono.error(() -> new RuntimeException("게시물을 찾지 못함")))

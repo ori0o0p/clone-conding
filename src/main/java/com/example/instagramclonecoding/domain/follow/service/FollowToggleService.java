@@ -20,7 +20,7 @@ public class FollowToggleService {
         return userRepository.findById(otherUser)
                 .switchIfEmpty(Mono.error(RuntimeException::new))
                 .flatMap(user -> {
-                    User me = userFacade.getUser();
+                    User me = userFacade.getUser().block();
                     if (user.getFollowerList().contains(me)) {
                         user.getFollowerList().remove(me);
                         me.getFollowList().remove(user);

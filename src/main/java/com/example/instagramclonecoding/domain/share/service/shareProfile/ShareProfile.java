@@ -1,6 +1,7 @@
 package com.example.instagramclonecoding.domain.share.service.shareProfile;
 
 import com.example.instagramclonecoding.domain.share.service.ShareService;
+import com.example.instagramclonecoding.domain.user.entity.User;
 import com.example.instagramclonecoding.domain.user.service.facade.UserFacade;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -18,7 +19,8 @@ public class ShareProfile {
     }
 
     public Mono<BufferedImage> execute() {
-        return shareService.execute("user/" + userFacade.getUser().getId());
+        return shareService.execute("user/" + userFacade.getUser()
+                .map(User::getId));
     }
 
 }

@@ -22,7 +22,7 @@ public class EditArticle {
     // req : 게시물 ID, 수정 사항 (content)
 
     public Mono<Void> execute(EditArticleRequest request) {
-        User user = userFacade.getUser();
+        User user = userFacade.getUser().block();
         return articleRepository.findById(request.id())
                 .switchIfEmpty(Mono.error(() -> new RuntimeException("게시물을 찾지 못함")))
                 .filter(article -> article.getWriter().equals(user))
