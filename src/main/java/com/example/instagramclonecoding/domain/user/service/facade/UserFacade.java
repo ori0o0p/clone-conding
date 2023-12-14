@@ -5,6 +5,7 @@ import com.example.instagramclonecoding.domain.user.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Component
 public class UserFacade {
@@ -14,15 +15,15 @@ public class UserFacade {
         this.userRepository = userRepository;
     }
 
-    public User getUser() {
+    public Mono<User> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return getUserByEmail(email);
     }
 
-    public User getUserByEmail(String email) {
+    public Mono<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .blockOptional().orElseThrow(RuntimeException::new);
+                .switchIfEmpty(Mono.error(() -> new RuntimeException("사용자를 찾지 못했습니다.")));
     }
 
 }
