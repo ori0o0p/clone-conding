@@ -2,7 +2,10 @@ package com.example.instagramclonecoding.domain.auth.service;
 
 import com.example.instagramclonecoding.domain.auth.dto.request.SignupRequest;
 import com.example.instagramclonecoding.domain.user.entity.User;
+import com.example.instagramclonecoding.domain.user.entity.UserInfo;
+import com.example.instagramclonecoding.domain.user.repository.UserInfoRepository;
 import com.example.instagramclonecoding.domain.user.repository.UserRepository;
+import com.example.instagramclonecoding.domain.user.service.CreateUserInfo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -11,10 +14,12 @@ import reactor.core.publisher.Mono;
 public class Signup {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CreateUserInfo createUserInfo;
 
-    public Signup(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public Signup(UserRepository userRepository, PasswordEncoder passwordEncoder, CreateUserInfo createUserInfo) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.createUserInfo = createUserInfo;
     }
 
     public Mono<Void> execute(SignupRequest request) {
@@ -28,7 +33,8 @@ public class Signup {
                             .password(encodedPassword)
                             .gender(request.gender())
                             .build();
-                    return userRepository.save(newUser);
+                    return userRepository.save(newUser)
+                            .then(createUserInfo.execute(newUser));
                 })).then();
     }
 
