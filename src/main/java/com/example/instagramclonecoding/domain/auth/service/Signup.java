@@ -26,6 +26,7 @@ public class Signup {
                             .email(request.email())
                             .name(request.name())
                             .password(encodedPassword)
+                            .gender(request.gender())
                             .build();
                     return userRepository.save(newUser);
                 })).then();

@@ -28,6 +28,8 @@ public class User {
     @JsonIgnore
     private String password;
 
+    private String gender;
+
     private String profileURL;
 
     @DBRef
@@ -45,11 +47,16 @@ public class User {
     private String info; // 소개 글
 
     @Builder
-    public User(String email, String name, String nickname, String password) {
+    public User(String email, String name, String nickname, String password, String gender) {
         this.email = email;
         this.name = name;
         this.nickname = nickname;
         this.password = password;
+        this.gender = gender;
+    }
+
+    public void editGender(String newGender) {
+        this.gender = newGender;
     }
 
     public void editInfo(String newInfo) {
