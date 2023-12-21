@@ -11,5 +11,5 @@ spring:
 
 
 default:
-  url: http://*^^*/
+  url: http://localhost:8080/
 
