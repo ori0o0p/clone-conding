@@ -15,15 +15,13 @@ public class GetAllHashTag {
     }
 
     public Flux<HashTagResponse> execute() {
-        Flux<HashTagResponse> list = hashTagRepository.findAll()
+        return hashTagRepository.findAll()
                 .collectList()
                 .flatMap(hashTags -> Flux.fromIterable(hashTags)
                         .map(HashTagResponse::new)
                         .collectList())
                 .flatMapMany(Flux::fromIterable)
                 .subscribeOn(Schedulers.boundedElastic());
-
-        return Flux.from(list);
     }
 
 }
