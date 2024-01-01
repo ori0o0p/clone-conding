@@ -13,6 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import reactor.core.publisher.Mono;
 
 import java.util.Date;
 import java.util.List;
@@ -63,8 +64,12 @@ public class Article {
         this.content = newContent;
     }
 
-    public void addComment(Comment comment) {
-        this.commentList.add(comment);
+    public Mono<Void> addComment(Comment comment) {
+        return Mono.just(this.commentList.add(comment)).then();
+    }
+
+    public Mono<Void> addHashTag(HashTag hashTag) {
+        return Mono.just(this.hashTags.add(hashTag)).then();
     }
 
 }
