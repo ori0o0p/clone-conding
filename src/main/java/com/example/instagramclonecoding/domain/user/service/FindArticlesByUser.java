@@ -4,12 +4,16 @@ import com.example.instagramclonecoding.domain.article.dto.ArticleResponse;
 import com.example.instagramclonecoding.domain.article.entity.Article;
 import com.example.instagramclonecoding.domain.article.repository.ArticleRepository;
 import com.example.instagramclonecoding.domain.comment.collection.CommentCollection;
+import com.example.instagramclonecoding.domain.comment.dto.CommentResponse;
 import com.example.instagramclonecoding.domain.like.collection.LikeCollection;
+import com.example.instagramclonecoding.domain.like.dto.LikeResponse;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+
+import java.util.List;
 
 @Service
 public class FindArticlesByUser {
@@ -32,17 +36,20 @@ public class FindArticlesByUser {
         LikeCollection likeCollection = new LikeCollection(article.getLikeList());
         CommentCollection commentCollection = new CommentCollection(article.getCommentList());
 
-        return Mono.just(ArticleResponse.builder()
+        Mono<List<LikeResponse>> likeListMono = likeCollection.toLikeResponse().collectList();
+        Mono<List<CommentResponse>> commentListMono = commentCollection.toCommentResponse().collectList();
+
+        return Mono.zip(likeListMono, commentListMono)
+                .map(tuple -> ArticleResponse.builder()
                         .id(article.getId())
                         .writer(article.getWriter())
                         .imageURL(article.getImageURL())
                         .content(article.getContent())
                         .createdAt(article.getCreatedAt())
-                        .likeList(likeCollection.toLikeResponse()
-                                .collectList().block())
-                        .commentList(commentCollection.toCommentResponse()
-                                .collectList().block())
-                .build());
+                        .likeList(tuple.getT1())
+                        .commentList(tuple.getT2())
+                        .build());
     }
+
 
 }
