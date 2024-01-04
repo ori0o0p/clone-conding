@@ -9,8 +9,8 @@ import com.example.instagramclonecoding.domain.like.collection.LikeCollection;
 import com.example.instagramclonecoding.domain.like.dto.LikeResponse;
 import com.example.instagramclonecoding.domain.comment.dto.CommentResponse;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
@@ -27,15 +27,15 @@ public class FindArticleById {
     // req : article ID
     public Mono<ArticleResponse> execute(String articleId) {
         return articleFacade.getArticle(articleId)
-                .map(this::rapping);
+                .flatMap(this::rapping);
     }
 
-    private ArticleResponse rapping(Article article) {
+    private Mono<ArticleResponse> rapping(Article article) {
         LikeCollection likeCollection = new LikeCollection(article.getLikeList());
         CommentCollection commentCollection = new CommentCollection(article.getCommentList());
 
         Mono<List<LikeResponse>> likeListMono = likeCollection.toLikeResponse().collectList();
-        Mono<List<CommentResponse>> commentListMono = likeCollection.toLikeResponse().collectList();
+        Mono<List<CommentResponse>> commentListMono = commentCollection.toCommentResponse().collectList();
         
         return Mono.zip(likeListMono, commentListMono)
                 .map(tuple -> ArticleResponse.builder()
