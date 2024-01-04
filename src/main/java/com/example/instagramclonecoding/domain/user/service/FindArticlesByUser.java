@@ -3,6 +3,7 @@ package com.example.instagramclonecoding.domain.user.service;
 import com.example.instagramclonecoding.domain.article.dto.ArticleResponse;
 import com.example.instagramclonecoding.domain.article.entity.Article;
 import com.example.instagramclonecoding.domain.article.repository.ArticleRepository;
+import com.example.instagramclonecoding.domain.article.service.facade.ArticleToArticleResponse;
 import com.example.instagramclonecoding.domain.comment.collection.CommentCollection;
 import com.example.instagramclonecoding.domain.comment.dto.CommentResponse;
 import com.example.instagramclonecoding.domain.like.collection.LikeCollection;
@@ -18,9 +19,11 @@ import java.util.List;
 @Service
 public class FindArticlesByUser {
     private final ArticleRepository articleRepository;
+    private final ArticleToArticleResponse articleToArticleResponse;
 
-    public FindArticlesByUser(ArticleRepository articleRepository) {
+    public FindArticlesByUser(ArticleRepository articleRepository, ArticleToArticleResponse articleToArticleResponse) {
         this.articleRepository = articleRepository;
+        this.articleToArticleResponse = articleToArticleResponse;
     }
 
     public Flux<ArticleResponse> execute(String userId, String lastArticleId, int size) {
@@ -28,28 +31,8 @@ public class FindArticlesByUser {
                 .filter(article -> lastArticleId == null ||
                         new ObjectId(article.getId()).getTimestamp() > new ObjectId(lastArticleId).getTimestamp())
                 .take(size)
-                .flatMap(this::rapping)
+                .flatMap(articleToArticleResponse::rapping)
                 .subscribeOn(Schedulers.boundedElastic());
     }
-
-    private Mono<ArticleResponse> rapping(Article article) {
-        LikeCollection likeCollection = new LikeCollection(article.getLikeList());
-        CommentCollection commentCollection = new CommentCollection(article.getCommentList());
-
-        Mono<List<LikeResponse>> likeListMono = likeCollection.toLikeResponse().collectList();
-        Mono<List<CommentResponse>> commentListMono = commentCollection.toCommentResponse().collectList();
-
-        return Mono.zip(likeListMono, commentListMono)
-                .map(tuple -> ArticleResponse.builder()
-                        .id(article.getId())
-                        .writer(article.getWriter())
-                        .imageURL(article.getImageURL())
-                        .content(article.getContent())
-                        .createdAt(article.getCreatedAt())
-                        .likeList(tuple.getT1())
-                        .commentList(tuple.getT2())
-                        .build());
-    }
-
 
 }
