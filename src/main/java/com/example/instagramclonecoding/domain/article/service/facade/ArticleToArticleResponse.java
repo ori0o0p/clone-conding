@@ -6,10 +6,12 @@ import com.example.instagramclonecoding.domain.comment.collection.CommentCollect
 import com.example.instagramclonecoding.domain.comment.dto.CommentResponse;
 import com.example.instagramclonecoding.domain.like.collection.LikeCollection;
 import com.example.instagramclonecoding.domain.like.dto.LikeResponse;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+@Component
 public class ArticleToArticleResponse {
 
     public Mono<ArticleResponse> rapping(Article article) {
